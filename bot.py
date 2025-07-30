@@ -36,11 +36,10 @@ def welcome(message):
 def handle_query(message):
     algo = find_algorithm(message.text)
     if algo:
-        reply = f"📘 *{algo['название']}*
-"
-        for step in algo["этапы"]:
-            reply += f"🔹 *{step['этап']}*: {step['описание']}
-"
+       reply = f"📘 *{algo['название']}*\n"
+for step in algo["этапы"]:
+    reply += f"🔹 *{step['этап']}*: {step['описание']}\n"
+
         bot.send_message(message.chat.id, reply, parse_mode="Markdown")
     else:
         answer = ask_gpt(message.text)
