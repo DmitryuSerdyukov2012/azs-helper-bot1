@@ -19,14 +19,16 @@ def find_algorithm(query):
     return None
 
 def ask_gpt(prompt):
-    completion = openai.ChatCompletion.create(
+    client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "Ты помощник оператора АЗС. Отвечай по существу, кратко, ссылаясь на ГОСТы и инструкции."},
             {"role": "user", "content": prompt}
         ]
     )
-    return completion.choices[0].message["content"]
+    return response.choices[0].message.content
+
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
